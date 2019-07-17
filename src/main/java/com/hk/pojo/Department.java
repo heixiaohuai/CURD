@@ -13,6 +13,14 @@ public class Department {
         this.deptName = deptName;
     }
 
+    @Override
+    public String toString() {
+        return "Department{" +
+                "deptId=" + deptId +
+                ", deptName='" + deptName + '\'' +
+                '}';
+    }
+
     public Integer getDeptId() {
         return deptId;
     }

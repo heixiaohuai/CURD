@@ -5,7 +5,8 @@
   Time: 16:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<jsp:forward page="/getemps"></jsp:forward>
 <html>
 <head>
     <title>Title</title>
@@ -14,15 +15,6 @@
     <%--引入BootStrap样式--%>
     <link rel="stylesheet" href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-           $("button").click(function () {
-               alert(123123123);
-
-           });
-        });
-    </script>
 
 </head>
 <body>

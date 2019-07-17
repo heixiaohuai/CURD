@@ -16,6 +16,31 @@ public class Employee {
 //    查询员工时一并查询员工的部门信息
     private Department department;
 
+    public Employee() {
+    }
+
+    public Employee(Integer empId, String empName, Integer empAge, String empGender, String empEmail, Integer dId) {
+        this.empId = empId;
+        this.empName = empName;
+        this.empAge = empAge;
+        this.empGender = empGender;
+        this.empEmail = empEmail;
+        this.dId = dId;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empId=" + empId +
+                ", empName='" + empName + '\'' +
+                ", empAge=" + empAge +
+                ", empGender='" + empGender + '\'' +
+                ", empEmail='" + empEmail + '\'' +
+                ", dId=" + dId +
+                ", department=" + department +
+                '}';
+    }
+
     public Department getDepartment() {
         return department;
     }

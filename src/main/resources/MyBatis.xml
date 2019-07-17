@@ -12,5 +12,9 @@
         <package name="com.hk.pojo"/>
     </typeAliases>
 
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
 
+        </plugin>
+    </plugins>
 </configuration>

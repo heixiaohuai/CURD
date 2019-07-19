@@ -46,15 +46,15 @@ public class TestMapper {
 //		employeeMapper.insertSelective(new Employee(null,"小芳",29,"F","1233232190@qq.com",2));
 //		employeeMapper.insertSelective(new Employee(null,"赵云",28,"M","7987892312@qq.com",3));
 
-//		EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-//		for (int i = 0; i < 100; i++) {
-//			String emp_name = UUID.randomUUID().toString().substring(0, 5);
-//			String emp_email = emp_name+"@qq.com";
-//			Random random = new Random();
-//			int emp_age = random.nextInt(23)+22;
-//			mapper.insertSelective(new Employee(null, emp_name, emp_age,"M", emp_email, 1));
-//		}
+		EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+		for (int i = 0; i < 100; i++) {
+			String emp_name = UUID.randomUUID().toString().substring(0, 5);
+			String emp_email = emp_name+"@qq.com";
+			Random random = new Random();
+			int emp_age = random.nextInt(23)+22;
+			mapper.insertSelective(new Employee(null, emp_name, emp_age,"M", emp_email, 1));
+		}
 
-		employeeMapper.deleteByPrimaryKey(59);
+//		employeeMapper.deleteByPrimaryKey(59);
 	}
 }

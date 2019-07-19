@@ -2,6 +2,7 @@ package com.hk.service.impl;
 
 import com.hk.dao.EmployeeMapper;
 import com.hk.pojo.Employee;
+import com.hk.pojo.EmployeeExample;
 import com.hk.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getAll() {
 		return employeeMapper.selectByExampleWithDept(null);
+	}
+
+	@Override
+	public void saveEmp(Employee employee) {
+		employeeMapper.insertSelective(employee);
+	}
+
+	@Override
+	public boolean checkEmail(String emial) {
+		EmployeeExample example = new EmployeeExample();
+		EmployeeExample.Criteria criteria = example.createCriteria();
+		criteria.andEmpEmailEqualTo(emial);
+		long count = employeeMapper.countByExample(example);
+		return count == 0 ;
+	}
+
+	@Override
+	public Employee getEmp(Integer id) {
+		return employeeMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void updateEmp(Employee employee) {
+		//根据z
+		employeeMapper.updateByPrimaryKeySelective(employee);
+	}
+
+	@Override
+	public void deleteEmpById(Integer id) {
+		employeeMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteEmpBatch(List<Integer> ids) {
+		EmployeeExample example = new EmployeeExample();
+		EmployeeExample.Criteria criteria = example.createCriteria();
+		criteria.andEmpIdIn(ids);
+		employeeMapper.deleteByExample(example);
 	}
 }

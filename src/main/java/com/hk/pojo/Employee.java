@@ -1,14 +1,25 @@
 package com.hk.pojo;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class Employee {
     private Integer empId;
 
+    @Length(max = 25, min = 2)
     private String empName;
 
+    @Size(max = 80,min = 18)
     private Integer empAge;
 
     private String empGender;
 
+//    @Email
     private String empEmail;
 
     private Integer dId;

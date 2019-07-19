@@ -11,5 +11,11 @@ import java.util.List;
  * @Created by 13055
  */
 public interface EmployeeService {
-	public List<Employee> getAll();
+	List<Employee> getAll();
+	void saveEmp(Employee employee);
+	boolean checkEmail(String emial);
+	Employee getEmp(Integer id);
+	void updateEmp(Employee employee);
+	void deleteEmpById(Integer id);
+	void deleteEmpBatch(List<Integer> ids);
 }

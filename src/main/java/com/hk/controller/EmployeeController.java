@@ -7,12 +7,16 @@ import com.hk.pojo.Message;
 import com.hk.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Classname EmployeeController
@@ -45,6 +49,106 @@ public class EmployeeController {
 		PageInfo page = new PageInfo(employeeList, 3);
 		return Message.success().add("pageInfo",page);
 	}
+
+	/**
+	 * @Description 保存员工
+	 * @param
+	 * @return com.hk.pojo.Message
+	 * @date 2019/7/18 12:09
+	 * @author 13055
+	 */
+	@RequestMapping(value = "/emp", method = RequestMethod.POST)
+	@ResponseBody
+	public Message addEmps(@Valid Employee employee, BindingResult result){
+		if (result.hasErrors()){
+			Map<String, Object> errorMap = new HashMap<>();
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			for (FieldError f : fieldErrors){
+				errorMap.put(f.getField(),f.getDefaultMessage());
+			}
+			return Message.failed().add("errorFields", errorMap);
+		}else {
+			employeeServiceImpl.saveEmp(employee);
+			return Message.success();
+		}
+	}
+
+	/**
+	 * @Description 检查邮箱是否可用
+	 * @param
+	 * @param email
+	 * @return com.hk.pojo.Message
+	 * @date 2019/7/18 15:43
+	 * @author 13055
+	 */
+	@RequestMapping(value = "/checkemail")
+	@ResponseBody
+	public Message checkEmail(@Valid @RequestParam("empEmail") String email){
+		boolean b = employeeServiceImpl.checkEmail(email);
+		if (b){
+			return Message.success();
+		}else {
+			return Message.failed();
+		}
+	}
+
+	/**
+	 * @Description 按照员工的id查询员工的信息
+	 * @param
+	 * @param id
+	 * @return com.hk.pojo.Message
+	 * @date 2019/7/18 18:48
+	 * @author 13055
+	 */
+	@RequestMapping(value = "/emp/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Message getEmp(@PathVariable("id") Integer id){
+		Employee employee = employeeServiceImpl.getEmp(id);
+		return Message.success().add("empInfo", employee);
+	}
+
+
+	/**
+	 * @Description 员工更新的方法
+	 * @param
+	 * @param employee
+	 * @return com.hk.pojo.Message
+	 * @date 2019/7/18 20:15
+	 * @author 13055
+	 */
+	@RequestMapping(value = "/emp/{empId}", method = RequestMethod.PUT)
+	@ResponseBody
+	public Message updateEmp(Employee employee){
+		employeeServiceImpl.updateEmp(employee);
+		return Message.success();
+	}
+	
+	/**  
+	 * @Description 删除单个员工，以及批量删除员工
+	 * @param 
+	 * @param ids
+	 * @return com.hk.pojo.Message
+	 * @date 2019/7/18 21:37
+	 * @author 13055
+	 */       
+	@RequestMapping(value = "/emp/{ids}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Message deleteEmpById(@PathVariable("ids") String ids){
+		//批量删除
+		if (ids.contains("-")){
+			String[] id = ids.split("-");
+			List<Integer> idList = new ArrayList<>();
+			for (String s : id) {
+				idList.add(Integer.parseInt(s));
+			}
+			employeeServiceImpl.deleteEmpBatch(idList);
+		}else {
+			Integer id = Integer.parseInt(ids);
+			employeeServiceImpl.deleteEmpById(id);
+		}
+		return Message.success();
+	}
+
 
 	/**
 	 * @Description 员工分页查询
